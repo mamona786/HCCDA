@@ -1,0 +1,63 @@
+Installing DeepSeek AI Assistant on Huawei Mobile Devices
+
+DeepSeek is available on Huawei AppGallery, as confirmed by an official Huawei forum post. That means you can download it directly through AppGallery on your Huawei phone or tablet  .
+
+To install:
+
+1. Open AppGallery on your Huawei device.
+
+
+2. Search for DeepSeek.
+
+
+3. Tap Install, grant the necessary permissions, and complete setup.
+
+
+
+
+⚠️ Privacy Concern:
+
+Several users on Reddit raised privacy issues—reporting that "DeepSeek’s popular AI app is explicitly sending user data back to servers in China"  . If your privacy is a concern, please keep that in mind.
+
+
+
+---
+
+🌐 Deploying DeepSeek on Huawei Cloud (Cloud / Enterprise Use)
+
+If your intent is to set up DeepSeek on Huawei Cloud, possibly for enterprise, development, or AI inference purposes (instead of using the mobile app), you can deploy DeepSeek-R1 using Huawei ECS + Docker + Ollama + Open WebUI.
+
+Here's a streamlined deployment guide based on official resources:
+
+Step 1: Deploy Huawei Cloud Stack
+
+Use the Quick Deployment template "Building a DeepSeek Inference System".
+
+Choose your region and parameters: VPC, ECS instance specs (e.g. x1.16u.16g for 7B/8B model), security groups, root credentials, and optionally enable Dify for web interaction  .
+
+
+Step 2: Remote Login & Model Setup
+
+After deployment (~10 minutes), use CloudShell or SSH tools (PuTTY, MobaXterm) to access the ECS instance via its public IP  .
+
+On the VM, install Docker if using CPU-based instance:
+
+ollama run deepseek-r1:<model-size>
+
+where <model-size> can be 1.5b, 7b, or 8b depending on instance specs  .
+
+
+Step 3: (Optional) UI Setup with Open WebUI or Dify
+
+If you didn't enable Dify, you can manually run:
+
+docker run -d -p 3000:8080 --name open-webui ghcr.io/open-webui/open-webui:main
+
+Make sure to add inbound firewall rules for ports 11434 (Ollama) and 3000 (WebUI) in your ECS security group  .
+
+Access Open WebUI via browser at http://<ECS-public-IP>:3000 to log in and interact with DeepSeek  .
+
+
+Step 4: Chat and Use
+
+Use CLI (terminal) or WebUI to talk with DeepSeek. To end model sessions, type /bye if using CLI  .
